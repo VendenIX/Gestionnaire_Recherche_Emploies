@@ -1,0 +1,235 @@
+/* Carte de France interactive (map/FranceMap.tsx). */
+.france-map {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.map-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.map-head h3 {
+  margin: 0;
+}
+
+.map-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.map-toggle {
+  display: inline-flex;
+}
+
+.map-toggle .button {
+  background: var(--surface);
+  border-color: var(--grid);
+  color: var(--ink);
+}
+
+.map-toggle .button:first-child {
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+
+.map-toggle .button:last-child {
+  border-radius: 0 var(--radius) var(--radius) 0;
+  border-left: none;
+}
+
+.map-toggle .button[aria-pressed="true"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.map-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.map-status select {
+  font: inherit;
+  min-height: 2.5rem;
+  padding: 0 0.4rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--grid);
+}
+
+.map-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 13rem;
+  gap: var(--gap);
+  align-items: start;
+}
+
+.map-canvas {
+  position: relative;
+  width: 100%;
+  max-width: 44rem;
+  justify-self: center;
+}
+
+.map-canvas svg {
+  display: block;
+  height: auto;
+}
+
+.zone {
+  stroke: #ffffff;
+  stroke-width: 0.8;
+  cursor: pointer;
+  outline: none;
+}
+
+.zone:hover {
+  filter: brightness(0.92);
+}
+
+.region-borders {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 2.2;
+  pointer-events: none;
+}
+
+/* Zone survolée ou focalisée (le focus clavier est visible même sur un fond sombre). */
+.zone-highlight {
+  fill: none;
+  stroke: #f59e0b;
+  stroke-width: 3;
+  pointer-events: none;
+}
+
+.map-tooltip {
+  /* left / top posés par FranceMap (placeTooltip) : coin haut gauche, dans le cadre. */
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: var(--ink);
+  color: #ffffff;
+  border-radius: var(--radius);
+  padding: 0.4rem 0.6rem;
+  font-size: 0.85rem;
+  width: max-content;
+  max-width: min(16rem, calc(100% - 8px));
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+}
+
+
+.map-tooltip ul {
+  margin: 0.2rem 0 0;
+  padding-left: 1rem;
+}
+
+.map-tooltip .muted {
+  color: #d1d5db;
+}
+
+.map-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.map-counter {
+  font: inherit;
+  color: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--grid);
+  border-radius: var(--radius);
+  background: var(--background);
+  text-align: left;
+  cursor: pointer;
+}
+
+.map-counter.static {
+  cursor: default;
+}
+
+.map-counter-label {
+  font-weight: 600;
+}
+
+.map-counter-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.map-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.map-legend i {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 2px;
+  border: 1px solid var(--grid);
+}
+
+.map-hint {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.map-table summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.map-table table {
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  min-width: 16rem;
+}
+
+.map-table th,
+.map-table td {
+  border-bottom: 1px solid var(--grid);
+  padding: 0.2rem 0.6rem;
+  text-align: left;
+}
+
+.map-table td {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.map-caption {
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 720px) {
+  .map-body {
+    grid-template-columns: 1fr;
+  }
+}

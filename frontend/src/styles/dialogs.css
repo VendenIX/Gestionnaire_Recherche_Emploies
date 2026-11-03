@@ -1,0 +1,371 @@
+/* Fenêtres de dialogue, panneau de détail et formulaire d'offre.
+   Panneau : latéral à droite sur portable, plein écran sur mobile (< 720 px).
+   Pas de transform sur les fenêtres : une fenêtre imbriquée (position: fixed) reste plein écran. */
+
+.button.danger {
+  background: var(--danger);
+  color: #ffffff;
+}
+
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgb(17 24 39 / 45%);
+  display: flex;
+}
+
+.dialog-backdrop-modal {
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.dialog-backdrop-panel {
+  justify-content: flex-end;
+}
+
+.dialog {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.dialog:focus {
+  outline: none;
+}
+
+.dialog-modal {
+  border-radius: var(--radius);
+  width: min(52rem, 100%);
+  max-height: calc(100vh - 2rem);
+}
+
+.dialog-modal.confirm-dialog {
+  width: min(30rem, 100%);
+}
+
+.dialog-panel {
+  width: min(36rem, 100%);
+  height: 100%;
+}
+
+.dialog-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--grid);
+}
+
+.dialog-title {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.dialog-close {
+  min-width: 2.5rem;
+  font-size: 1.25rem;
+  line-height: 1;
+  border-color: var(--grid);
+}
+
+.dialog-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Panneau de détail */
+.detail-number {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.detail-actions,
+.detail-quick {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.detail-quick label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.tooltip-wrap {
+  display: inline-block;
+  cursor: not-allowed;
+}
+
+.detail-list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(9rem, max-content) 1fr;
+  border-top: 1px solid var(--grid);
+}
+
+.detail-item {
+  display: contents;
+}
+
+.detail-item dt,
+.detail-item dd {
+  margin: 0;
+  padding: 0.4rem 0.25rem;
+  border-bottom: 1px solid var(--grid);
+}
+
+.detail-item dt {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.detail-text {
+  white-space: pre-wrap;
+}
+
+.detail-links {
+  margin: 0;
+  padding-left: 1.1rem;
+  overflow-wrap: anywhere;
+}
+
+.detail-links a {
+  color: var(--accent);
+}
+
+/* Dossier Nextcloud (panneau de détail) */
+a.button {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.detail-folder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid var(--grid);
+  padding-top: 0.75rem;
+}
+
+.detail-folder h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.detail-folder p {
+  margin: 0;
+}
+
+.folder-name a,
+.folder-files a {
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+
+.folder-detail {
+  overflow-wrap: anywhere;
+}
+
+.folder-files-wrap {
+  overflow-x: auto;
+}
+
+.folder-files {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.folder-files th,
+.folder-files td {
+  text-align: left;
+  padding: 0.35rem 0.25rem;
+  border-bottom: 1px solid var(--grid);
+  vertical-align: top;
+}
+
+.folder-files th {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.folder-files td:not(:first-child) {
+  white-space: nowrap;
+}
+
+.folder-files th:nth-child(2),
+.folder-files .folder-size {
+  text-align: right;
+}
+
+/* Formulaire */
+.offer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.form-field-wide {
+  grid-column: 1 / -1;
+}
+
+.form-field > label,
+.form-links legend {
+  font-weight: 600;
+}
+
+.offer-form input[type="text"],
+.offer-form input[type="url"],
+.offer-form input[type="date"],
+.offer-form select,
+.offer-form textarea {
+  font: inherit;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--muted);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  min-height: 2.5rem;
+}
+
+.offer-form select:disabled {
+  background: var(--background);
+  color: var(--muted);
+}
+
+.offer-form [aria-invalid="true"] {
+  border-color: var(--danger);
+  box-shadow: 0 0 0 1px var(--danger);
+}
+
+.input-country {
+  max-width: 6rem;
+  text-transform: uppercase;
+}
+
+.field-error {
+  margin: 0;
+  color: var(--danger);
+  font-size: 0.9rem;
+}
+
+.field-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.form-links {
+  border: 1px solid var(--grid);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.75rem;
+}
+
+.form-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-links li {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.form-links li input {
+  flex: 1;
+  min-width: 0;
+}
+
+.form-links > .button {
+  align-self: flex-start;
+  margin-top: 0.4rem;
+}
+
+.form-checks {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.form-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.form-check input {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.form-error-summary:focus {
+  outline: 2px solid var(--danger);
+}
+
+@media (max-width: 720px) {
+  .dialog-backdrop-modal {
+    padding: 0;
+  }
+
+  .dialog-panel,
+  .dialog-modal,
+  .dialog-modal.confirm-dialog {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-list {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-item dt {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}

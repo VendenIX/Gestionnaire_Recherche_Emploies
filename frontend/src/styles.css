@@ -1,0 +1,303 @@
+/* Styles globaux du suivi d'offres. Couleurs de statut copiées de reference/build_excel_v2.py (PAL),
+   identiques à l'Excel v2 : fond (bg) et texte (fg). */
+:root {
+  --ink: #1f2937;
+  --muted: #5f6673; /* gris assombri (Excel : 6B7280) : contraste AA sur tous les fonds clairs */
+  --grid: #e5e7eb;
+  --surface: #ffffff;
+  --background: #f3f4f6;
+  --accent: #1d4ed8;
+  --accent-ink: #ffffff;
+  --danger: #b91c1c;
+
+  --status-a-postuler-bg: #fef3c7;
+  --status-a-postuler-fg: #92400e;
+  --status-en-cours-bg: #dbeafe;
+  --status-en-cours-fg: #1e40af;
+  --status-entretien-bg: #ede9fe;
+  --status-entretien-fg: #5b21b6;
+  --status-offre-recue-bg: #d1fae5;
+  --status-offre-recue-fg: #065f46;
+  --status-rejete-bg: #fee2e2;
+  --status-rejete-fg: #991b1b;
+  --status-abandon-bg: #e5e7eb;
+  --status-abandon-fg: #4b5563;
+  --status-a-qualifier-bg: #ffedd5;
+  --status-a-qualifier-fg: #9a3412;
+
+  /* Urgence de la date limite (même règle de couleurs que l'Excel v2). */
+  --deadline-today-bg: #dc2626;
+  --deadline-today-fg: #ffffff;
+  --deadline-3-bg: #ffedd5;
+  --deadline-3-fg: #c2410c;
+  --deadline-7-bg: #fef9c3;
+  --deadline-7-fg: #854d0e;
+  --deadline-later-bg: #dcfce7;
+  --deadline-later-fg: #166534;
+
+  --radius: 6px;
+  --gap: 1rem;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--background);
+  line-height: 1.45;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+h1,
+h2 {
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+code {
+  font-size: 0.9em;
+  background: var(--grid);
+  padding: 0 0.25em;
+  border-radius: 3px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--grid);
+  border-radius: var(--radius);
+  padding: var(--gap);
+}
+
+/* Boutons */
+.button {
+  font: inherit;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  min-height: 2.5rem;
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button.primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.button.ghost {
+  background: transparent;
+  color: inherit;
+  border-color: currentColor;
+}
+
+/* En-tête et navigation */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
+  padding: 0.5rem var(--gap);
+  background: var(--ink);
+  color: #ffffff;
+}
+
+.brand {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.main-nav {
+  display: flex;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius);
+}
+
+.nav-link:hover {
+  background: rgb(255 255 255 / 0.12);
+}
+
+.nav-link[aria-current="page"] {
+  background: #ffffff;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.app-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--gap);
+}
+
+/* Écran du jeton */
+.token-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--gap);
+}
+
+.token-card {
+  width: min(100%, 26rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.token-card p {
+  margin: 0;
+}
+
+.token-card label {
+  font-weight: 600;
+}
+
+.token-card input {
+  font: inherit;
+  padding: 0.5rem;
+  border: 1px solid var(--muted);
+  border-radius: var(--radius);
+}
+
+.notice {
+  background: var(--status-en-cours-bg);
+  color: var(--status-en-cours-fg);
+  padding: 0.5rem;
+  border-radius: var(--radius);
+}
+
+.error {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* Pastilles de statut */
+.status {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.status-a-postuler {
+  background: var(--status-a-postuler-bg);
+  color: var(--status-a-postuler-fg);
+}
+
+.status-en-cours {
+  background: var(--status-en-cours-bg);
+  color: var(--status-en-cours-fg);
+}
+
+.status-entretien {
+  background: var(--status-entretien-bg);
+  color: var(--status-entretien-fg);
+}
+
+.status-offre-recue {
+  background: var(--status-offre-recue-bg);
+  color: var(--status-offre-recue-fg);
+}
+
+.status-rejete {
+  background: var(--status-rejete-bg);
+  color: var(--status-rejete-fg);
+}
+
+.status-abandon {
+  background: var(--status-abandon-bg);
+  color: var(--status-abandon-fg);
+}
+
+.status-a-qualifier {
+  background: var(--status-a-qualifier-bg);
+  color: var(--status-a-qualifier-fg);
+}
+
+@media (max-width: 640px) {
+  .app-header {
+    padding: 0.5rem;
+  }
+
+  .app-header .button {
+    margin-left: auto;
+  }
+
+  .main-nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .app-main {
+    padding: 0.5rem;
+  }
+}
+
+/* Lien d'évitement : hors écran, visible au focus clavier. */
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -10rem;
+  z-index: 100;
+  background: var(--surface);
+  color: var(--accent);
+  font-weight: 700;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius);
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+/* Le contenu reçoit le focus du lien d'évitement : pas de cadre autour de toute la page. */
+.app-main:focus {
+  outline: none;
+}

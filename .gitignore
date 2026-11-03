@@ -1,0 +1,19 @@
+# Obsidian: per-machine vault settings
+.obsidian/
+*.xlsx
+*.csv
+# Python / local dev (data/ holds the referential: never ignore it)
+.venv/
+var/
+*.db
+*.db-wal
+*.db-shm
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+.env
+# Frontend (npm, Vite)
+node_modules/
+frontend/dist/
+frontend/coverage/
+*.tsbuildinfo

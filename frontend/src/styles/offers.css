@@ -1,0 +1,352 @@
+/* Tableau des offres. Couleurs de statut et d'urgence : variables de styles.css, copiées de
+   reference/build_excel_v2.py (PAL et mise en forme conditionnelle). */
+:root {
+  /* Deadline dépassée d'une offre « À postuler » (Excel : fond FEE2E2, texte 991B1B). */
+  --deadline-overdue-apply-bg: #fee2e2;
+  --deadline-overdue-apply-fg: #991b1b;
+  /* Relance suggérée (Excel : fond FDE68A, texte 92400E). */
+  --follow-up-bg: #fde68a;
+  --follow-up-fg: #92400e;
+  /* Lignes Rejeté / Abandon estompées (Excel : fond F9FAFB ; texte assombri en 6B7280 pour le
+     contraste, l'Excel utilise 9CA3AF). */
+  --row-closed-bg: #f9fafb;
+  --row-closed-fg: #6b7280;
+  /* En-têtes des colonnes rapides (Excel : 1D4ED8), des autres (Excel : 1F2937). */
+  --head-quick-bg: #1d4ed8;
+  --head-bg: #1f2937;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.offers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.offers-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.offers-head h2 {
+  margin: 0;
+}
+
+.offers-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.offers-count {
+  margin: 0;
+}
+
+/* Filtres rapides */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.5rem 0.75rem;
+}
+
+.filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.filters select,
+.filters input {
+  font: inherit;
+  font-weight: 400;
+  min-height: 2.5rem;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--muted);
+  border-radius: var(--radius);
+  background: var(--surface);
+  max-width: 16rem;
+}
+
+.filter-text {
+  flex: 1 1 14rem;
+}
+
+.filters .filter-text input {
+  max-width: none;
+  width: 100%;
+}
+
+/* Tableau */
+.table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--grid);
+  border-radius: var(--radius);
+}
+
+.offers-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.offers-table th,
+.offers-table td {
+  border-bottom: 1px solid var(--grid);
+  padding: 0.3rem 0.45rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.offers-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--head-bg);
+  color: #ffffff;
+  font-size: 0.8rem;
+  /* Les en-têtes longs (« Jours restants », « Département / Région ») passent sur deux lignes
+     quand le navigateur resserre les colonnes (y compris sur grand écran, où le tableau est plafonné) :
+     le tableau tient sans défilement à 1366 px. */
+  white-space: normal;
+}
+
+.offers-table thead th.col-check {
+  white-space: normal;
+  min-width: 5.5rem;
+  text-align: center;
+}
+
+.offers-table thead th.col-quick {
+  background: var(--head-quick-bg);
+}
+
+.sort-button {
+  font: inherit;
+  font-weight: 700;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0.2rem 0;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+
+.sort-mark {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+.cell-status,
+.cell-deadline,
+.cell-days,
+.cell-id {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cell-check {
+  text-align: center;
+}
+
+.offers-table td.cell-days,
+.offers-table td.cell-deadline {
+  font-weight: 700;
+}
+
+.cell-id {
+  color: var(--muted);
+}
+
+.cell-title {
+  min-width: 12rem;
+}
+
+.cell-location {
+  min-width: 7rem;
+}
+
+.cell-geo {
+  min-width: 8rem;
+}
+
+.status-select {
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 1px solid transparent;
+  padding: 0.2rem 0.4rem;
+  cursor: pointer;
+  min-height: 2rem;
+}
+
+.status-select:hover {
+  border-color: currentColor;
+}
+
+.cell-edit {
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  background: none;
+  border: 1px dashed transparent;
+  border-radius: 4px;
+  padding: 0.2rem 0.3rem;
+  width: 100%;
+  min-height: 2rem;
+  cursor: text;
+}
+
+.cell-edit:hover {
+  border-color: var(--muted);
+}
+
+.cell-input {
+  font: inherit;
+  width: 100%;
+  min-width: 8rem;
+  padding: 0.2rem 0.3rem;
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+}
+
+.cell-checkbox {
+  width: 1.15rem;
+  height: 1.15rem;
+  cursor: pointer;
+  accent-color: #15803d;
+}
+
+/* Urgence de la date limite (Deadline et Jours restants) */
+.deadline-today {
+  background: var(--deadline-today-bg);
+  color: var(--deadline-today-fg);
+}
+
+.deadline-soon {
+  background: var(--deadline-3-bg);
+  color: var(--deadline-3-fg);
+}
+
+.deadline-week {
+  background: var(--deadline-7-bg);
+  color: var(--deadline-7-fg);
+}
+
+.deadline-later {
+  background: var(--deadline-later-bg);
+  color: var(--deadline-later-fg);
+}
+
+.deadline-overdue-apply {
+  background: var(--deadline-overdue-apply-bg);
+  color: var(--deadline-overdue-apply-fg);
+}
+
+.offers-table td.deadline-overdue {
+  color: var(--muted);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.badge-follow-up {
+  display: block;
+  width: fit-content;
+  margin: 0.2rem auto 0;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  background: var(--follow-up-bg);
+  color: var(--follow-up-fg);
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* Lignes Rejeté / Abandon estompées (la pastille de statut garde sa couleur) */
+.row-closed td {
+  background: var(--row-closed-bg);
+  color: var(--row-closed-fg);
+}
+
+.link-button {
+  font: inherit;
+  color: var(--accent);
+  background: none;
+  border: 0;
+  padding: 0.2rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.edit-error {
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .filters label {
+    flex: 1 1 45%;
+  }
+
+  .filters select {
+    max-width: none;
+  }
+
+  /* Mobile : le tableau défile horizontalement ; Statut, Deadline et Jours restants tiennent dans
+     la largeur au départ, et la colonne Statut reste collée à gauche pendant le défilement. */
+  .offers-table {
+    font-size: 0.85rem;
+  }
+
+  .offers-table th,
+  .offers-table td {
+    padding: 0.25rem 0.3rem;
+  }
+
+  /* « Jours restants » sur deux lignes : les trois premières colonnes tiennent dans 375 px. */
+  .offers-table thead th {
+    white-space: normal;
+  }
+
+  .status-select {
+    font-size: 0.8rem;
+    padding: 0.15rem 0.2rem;
+    max-width: 7.5rem;
+  }
+
+  .offers-table th:first-child,
+  .offers-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--surface);
+    box-shadow: 1px 0 0 var(--grid);
+  }
+
+  .offers-table thead th:first-child {
+    z-index: 3;
+    background: var(--head-quick-bg);
+  }
+
+  .offers-table tr.row-closed td:first-child {
+    background: var(--row-closed-bg);
+  }
+
+  .cell-title {
+    min-width: 10rem;
+  }
+}

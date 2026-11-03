@@ -1,0 +1,149 @@
+/* Page Synthèse : compteurs, répartition par statut, deadlines. Couleurs de statut : variables
+   --status-* de styles.css (PAL de l'Excel v2). */
+.synthese {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+.synthese h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.synthese-error {
+  color: var(--danger);
+  margin: 0;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.tile {
+  border-radius: var(--radius);
+  padding: 0.6rem 0.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tile dt {
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.tile dd {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.tile-neutral {
+  background: var(--surface);
+  border: 1px solid var(--grid);
+}
+
+.tile-neutral dt {
+  color: var(--muted);
+}
+
+/* Excel : « Deadlines ≤ 7 jours », texte C2410C sur FFEDD5. */
+.tile-deadline {
+  background: var(--deadline-3-bg);
+  color: var(--deadline-3-fg);
+}
+
+.synthese-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: var(--gap);
+}
+
+/* Répartition par statut : barres horizontales (largeur = part du total). */
+.bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr 5.5rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.bar-label {
+  justify-self: start;
+}
+
+.bar-track {
+  height: 0.9rem;
+  background: var(--background);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  min-width: 0;
+}
+
+.bar-status-a-postuler { background: var(--status-a-postuler-fg); }
+.bar-status-en-cours { background: var(--status-en-cours-fg); }
+.bar-status-entretien { background: var(--status-entretien-fg); }
+.bar-status-offre-recue { background: var(--status-offre-recue-fg); }
+.bar-status-rejete { background: var(--status-rejete-fg); }
+/* Excel : barre Abandon en 6B7280. */
+.bar-status-abandon { background: #6b7280; }
+.bar-status-a-qualifier { background: var(--status-a-qualifier-fg); }
+
+.bar-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.bars-total {
+  margin: 0.5rem 0 0;
+}
+
+.deadlines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.deadlines li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+  align-items: baseline;
+}
+
+.deadline-chip {
+  border-radius: 999px;
+  padding: 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid var(--grid);
+}
+
+@media (max-width: 480px) {
+  .bar-row {
+    grid-template-columns: 6.5rem 1fr 4.5rem;
+  }
+}

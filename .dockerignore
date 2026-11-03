@@ -1,0 +1,35 @@
+# Seuls pyproject.toml, backend/app, data/ et frontend/ (étape de build Node) entrent dans l'image.
+.git
+.gitignore
+.github
+.obsidian
+docs
+reference
+README.md
+compose*.yml
+Dockerfile
+.dockerignore
+
+# Secrets et données locales
+.env
+.env.*
+var/
+*.db
+*.db-wal
+*.db-shm
+*.xlsx
+*.csv
+
+# Environnements, caches, tests
+.venv/
+venv/
+**/__pycache__/
+**/*.pyc
+.pytest_cache/
+.ruff_cache/
+backend/tests/
+cli/
+**/node_modules/
+frontend/dist/
+frontend/coverage/
+backend/app/static/

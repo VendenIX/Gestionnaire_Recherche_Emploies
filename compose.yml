@@ -1,0 +1,30 @@
+# Dev local : mkdir -p var && docker compose up -d --build   (voir README.md)
+# Prérequis : cp .env.example .env, puis renseigner API_TOKEN ; créer ./var avec votre compte
+# (mkdir -p var) : sinon Compose s'arrête sur une erreur au lieu de créer un dossier root.
+# Les données (jobs.db, backups/) vont dans ./var, ignoré par git. Le dossier ./data du dépôt
+# contient le référentiel des départements (embarqué dans l'image) : ne pas le monter sur /data.
+services:
+  jobs:
+    build:
+      context: .
+      platforms:
+        - linux/amd64
+    image: jobs-tracker:dev
+    container_name: jobs-tracker-dev
+    # .env porte aussi les réglages Nextcloud (NEXTCLOUD_WEBDAV, NEXTCLOUD_URL, NEXTCLOUD_USER,
+    # NEXTCLOUD_APP_PASSWORD, NEXTCLOUD_ROOT) : voir .env.example et README.md.
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+    # Le conteneur tourne avec votre UID/GID pour pouvoir écrire dans ./var
+    # (export LOCAL_UID=$(id -u) LOCAL_GID=$(id -g) si ce n'est pas 1000).
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    volumes:
+      - type: bind
+        source: ./var
+        target: /data
+        bind:
+          create_host_path: false
+    ports:
+      - "8000:8000"
+    restart: unless-stopped

@@ -1,0 +1,42 @@
+# TrueNAS SCALE : Apps > Discover Apps > ⋮ > Install via YAML, coller ce fichier.
+# Avant de coller, remplacer :
+#   <utilisateur>  votre compte GitHub (image privée sur GHCR, voir README.md)
+#   <pool>         le pool ZFS ; créer le dataset /mnt/<pool>/apps/jobs-tracker, propriétaire apps (568:568)
+#   API_TOKEN      vide ici, à renseigner : un jeton long et aléatoire (ex. openssl rand -hex 32),
+#                  jamais versionné ; tant qu'il est vide, le service refuse de démarrer
+#   NEXTCLOUD_*    facultatif (dossiers des offres, voir README.md « Dossiers Nextcloud ») :
+#                  NEXTCLOUD_WEBDAV "true", l'adresse, l'identifiant, un mot de passe
+#                  d'application (jamais versionné) et le dossier racine (ex. /Candidatures)
+services:
+  jobs:
+    image: ghcr.io/<utilisateur>/jobs-tracker:latest
+    pull_policy: always
+    user: "568:568"
+    environment:
+      API_TOKEN: ""   # à renseigner (jeton long et aléatoire) : le service refuse de démarrer tant qu'il est vide
+      DATA_DIR: /data
+      FOLLOW_UP_DAYS: "14"
+      BACKUP_KEEP_DAYS: "14"
+      NEXTCLOUD_WEBDAV: "false"
+      NEXTCLOUD_URL: ""
+      NEXTCLOUD_USER: ""
+      NEXTCLOUD_APP_PASSWORD: ""   # mot de passe d'application Nextcloud, à renseigner ici seulement
+      NEXTCLOUD_ROOT: /Candidatures
+      TZ: Europe/Paris
+    volumes:
+      - type: bind
+        source: /mnt/<pool>/apps/jobs-tracker
+        target: /data
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=4).status == 200 else 1)"
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+    restart: unless-stopped
